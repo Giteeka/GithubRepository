@@ -35,4 +35,6 @@ ext {
     retrofitVersion = '2.6.0'
     glideVersion = '4.9.0'
     logginInterceptorVersion = '3.8.0'
+    rxjava2Version = '2.2.13'
+    rxandroidVersion = '2.1.1'
 }
