@@ -3,6 +3,8 @@ package com.app.gitrepository.ui.home
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.gitrepository.BR
 import com.app.gitrepository.R
 import com.app.gitrepository.data.local.SharedPreferenceHelper
@@ -11,6 +13,7 @@ import com.app.gitrepository.databinding.ActivityHomeBinding
 import com.app.gitrepository.ui.ViewModelProviderFactory
 import com.app.gitrepository.ui.base.BaseActivity
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_home.*
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
@@ -39,11 +42,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         viewDataBinding?.swipeToRefresh?.setOnRefreshListener {
             getViewModel()?.loadData(true)
         }
-        getViewModel()?.setNavigator(this)
-        supportActionBar?.title =
-            getDataManager().sharePref.getString(SharedPreferenceHelper.PREF_TITLE, getString(R.string.title_home))
-        getViewModel()?.loadData()
 
+        val dividerItemDecoration = DividerItemDecoration(
+            rv_items.context, LinearLayoutManager.VERTICAL
+        )
+        rv_items.addItemDecoration(dividerItemDecoration)
+        getViewModel()?.setNavigator(this)
+        supportActionBar?.title =getString(R.string.trending)
+        getViewModel()?.loadData()
         getViewModel()?.listLiveData?.observe(this,
             Observer<List<Repository>> { t ->
                 supportActionBar?.title =

@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="textPrimary">#0F0909</color>
+    <color name="textTitle">#52575C</color>
+    <color name="textDescription">#52575C</color>
     <color name="textSecondary">#555555</color>
+    <color name="colorDivider">#e8e8e8</color>
 </resources>

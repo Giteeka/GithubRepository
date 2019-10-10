@@ -11,73 +11,132 @@
             type="com.app.gitrepository.data.model.Repository" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="3dp"
-        app:contentPadding="8dp"
-        tools:background="#E0A9A2"
-        tools:cardBackgroundColor="#E0A9A2">
+        android:layout_margin="3dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="36dp"
+        android:paddingBottom="16dp"
+        tools:background="#BE7ABA">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_ref"
+            setImagePath="@{rowItem.avatar}"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:background="#47BEF5" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_author"
+            defaultText="@{@string/no_title}"
+            rowText="@{rowItem.author}"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            tools:background="#BE7ABA">
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/textPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_ref"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="#aaeaea" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_title"
-                defaultText="@{@string/no_title}"
-                rowText="@{rowItem.name}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.533"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:background="#aaeaea" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            defaultText="@{@string/no_description}"
+            rowText="@{rowItem.name}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/textSecondary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_ref"
+            app:layout_constraintTop_toBottomOf="@id/tv_author"
+            tools:background="#F0F547" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc"
+            defaultText="@{@string/no_description}"
+            rowText="@{rowItem.name}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/textSecondary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_ref"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:background="#F0F547" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_lang"
+            defaultText="@{@string/no_description}"
+            rowText="@{rowItem.language}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/textSecondary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_stars"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            tools:background="#F0F547" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_stars"
+            defaultText="@{@string/no_description}"
+            rowText="@{rowItem.stars}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/textSecondary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_forks"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/tv_lang"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            tools:background="#F0F547" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_forks"
+            defaultText="@{@string/no_description}"
+            rowText="@{rowItem.forks}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/textSecondary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/tv_stars"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            tools:background="#F0F547" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_desc"
-                defaultText="@{@string/no_description}"
-                rowText="@{rowItem.description}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="3dp"
-                android:textColor="@color/textSecondary"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_ref"
-                app:layout_constraintHorizontal_weight="0.6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                app:layout_constraintVertical_bias="0"
-                tools:background="#F0F547" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_ref"
-                setImagePath="@{rowItem.avatar}"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="10dp"
-                android:background="#47BEF5"
-                android:minWidth="80dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="0.4"
-                app:layout_constraintStart_toEndOf="@id/tv_desc"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                app:layout_constraintVertical_bias="0"
-                tools:background="#47BEF5" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

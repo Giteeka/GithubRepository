@@ -6,10 +6,12 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.gitrepository.GlideApp
 import com.app.gitrepository.R
+import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("setImagePath")
 fun AppCompatImageView.setImagePath(path: String?) {
-        GlideApp.with(this.context).load(path).placeholder(R.drawable.ic_launcher_background).into(this)
+    GlideApp.with(this.context).load(path).apply(RequestOptions.circleCropTransform())
+        .placeholder(R.drawable.ic_launcher_background).into(this)
 }
 
 @BindingAdapter("setRefreshing")
@@ -22,7 +24,7 @@ fun SwipeRefreshLayout.setRefreshing(boolean: Boolean) {
 fun setTextViewText(view: TextView, rowText: String?, defaultText: String?) {
     Logg.e("BindingAdapter", "text : $rowText")
     Logg.e("BindingAdapter", "defaultText : $defaultText")
-    if (rowText.isNullOrEmpty() ||rowText.equals("null", ignoreCase = false))
+    if (rowText.isNullOrEmpty() || rowText.equals("null", ignoreCase = false))
         view.text = defaultText
     else
         view.text = rowText
