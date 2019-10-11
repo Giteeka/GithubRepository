@@ -3,21 +3,24 @@ package com.app.gitrepository.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-class Repository {
-
+@Entity(ignoredColumns = ["isExpanded"])
+data class Repository(
     @PrimaryKey(autoGenerate = true)
-    var id : Long? = null
-    var author: String? = null
-    var name: String? = null
-    var avatar: String? = null
-    var url: String? = null
-    var description: String? = null
-    var language: String? = null
-    var languageColor: String? = null
-    var stars: Int? = null
-    var forks: Int? = null
-    var currentPeriodStars: Int? = null
-    var builtBy: ArrayList<BuiltBy>? = null
+    var _id: Int = 0,
+    var author: String?,
+    var name: String?,
+    var avatar: String?,
+    var url: String?,
+    var description: String?,
+    var language: String?,
+    var languageColor: String?,
+    var stars: String?,
+    var forks: String?,
+    var currentPeriodStars: String?,
+    var builtBy: ArrayList<BuiltBy?>?
+)
+{
+    var isExpanded : Boolean? = false
 
 }
+

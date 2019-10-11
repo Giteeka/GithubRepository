@@ -9,6 +9,12 @@
         <variable
             name="rowItem"
             type="com.app.gitrepository.data.model.Repository" />
+
+        <variable
+            name="selectedId"
+            type="Integer" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,10 +32,10 @@
             setImagePath="@{rowItem.avatar}"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toTopOf="@id/tv_author"
+            app:layout_constraintVertical_bias="0.5"
             tools:background="#47BEF5" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -59,7 +65,6 @@
             android:fontFamily="@font/roboto_medium"
             android:textColor="@color/textSecondary"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_ref"
             app:layout_constraintTop_toBottomOf="@id/tv_author"
@@ -68,15 +73,14 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_desc"
             defaultText="@{@string/no_description}"
-            rowText="@{rowItem.name}"
+            rowText="@{rowItem.description}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/roboto_medium"
             android:textColor="@color/textSecondary"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_ref"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
@@ -84,33 +88,41 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_lang"
-            defaultText="@{@string/no_description}"
+            defaultText="@{@string/not_specified}"
+            drawbaleColor="@{rowItem.languageColor}"
             rowText="@{rowItem.language}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableLeft="@drawable/ic_circle"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center_vertical"
             android:textColor="@color/textSecondary"
-            android:textSize="15sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_stars"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@id/iv_ref"
             app:layout_constraintTop_toBottomOf="@id/tv_desc"
             tools:background="#F0F547" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_stars"
-            defaultText="@{@string/no_description}"
+            defaultText="@{@string/not_specified}"
             rowText="@{rowItem.stars}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@mipmap/ic_star_yellow_16"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center_vertical"
             android:textColor="@color/textSecondary"
-            android:textSize="15sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_forks"
             app:layout_constraintHorizontal_bias="0"
@@ -120,15 +132,18 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_forks"
-            defaultText="@{@string/no_description}"
+            defaultText="@{@string/not_specified}"
             rowText="@{rowItem.forks}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@mipmap/ic_fork_black_16"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center_vertical"
             android:textColor="@color/textSecondary"
-            android:textSize="15sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
@@ -136,7 +151,14 @@
             app:layout_constraintTop_toBottomOf="@id/tv_desc"
             tools:background="#F0F547" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{rowItem.isExpanded ? View.VISIBLE : View.GONE }"
+            app:constraint_referenced_ids="tv_desc,tv_lang,tv_stars,tv_forks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

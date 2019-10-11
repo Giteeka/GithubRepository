@@ -8,4 +8,8 @@
     <string name="no_title">No title</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="trending">Trending</string>
+    <string name="not_specified">-</string>
+    <string name="something_went_wrong">Something went wrong..</string>
+    <string name="something_went_wrong_desc">An alien is probably blocking your signal.</string>
+    <string name="retry">Retry</string>
 </resources>
