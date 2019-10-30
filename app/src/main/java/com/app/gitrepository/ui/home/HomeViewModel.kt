@@ -2,17 +2,15 @@ package com.app.gitrepository.ui.home
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.app.gitrepository.SeedDatabaseWorker
-import com.app.gitrepository.data.MyDataManager
+import com.app.gitrepository.data.DataManager
 import com.app.gitrepository.data.model.Repository
 import com.app.gitrepository.ui.base.BaseViewModel
+import com.app.gitrepository.utils.Logg
+import com.app.gitrepository.utils.rx.AppSchedulerProvider
+import com.app.gitrepository.utils.rx.SchedulerProvider
 
 
-class HomeViewModel(private var myDataManager: MyDataManager) : BaseViewModel<HomeNavigator>() {
+class HomeViewModel(private var myDataManager: DataManager,private var appSchedulerProvider: SchedulerProvider) : BaseViewModel<HomeNavigator>() {
 
     private val TAG = "HomeViewModel"
     var listLiveData: MutableLiveData<List<Repository>> = MutableLiveData()
@@ -28,12 +26,12 @@ class HomeViewModel(private var myDataManager: MyDataManager) : BaseViewModel<Ho
         isLoading.set(true)
         val subscribe =
             myDataManager.fetchHomeScreenData()
-                .subscribeOn(getSchedulerProvider().io())
+                .subscribeOn(appSchedulerProvider.io())
                 .doAfterSuccess {
                     myDataManager.deleteAll()
                     myDataManager.insert(it)
                 }
-                .observeOn(getSchedulerProvider().ui())
+                .observeOn(appSchedulerProvider.ui())
                 .subscribe({ blogResponse ->
                     isLoading.set(false)
                     if (blogResponse != null && blogResponse.isNotEmpty()) {
@@ -52,8 +50,8 @@ class HomeViewModel(private var myDataManager: MyDataManager) : BaseViewModel<Ho
     private fun loadDataFromLocal() {
         isLoading.set(true)
         val subscribe =
-            myDataManager.getRowItems().subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
+            myDataManager.getRowItems().subscribeOn(appSchedulerProvider.io())
+                .observeOn(appSchedulerProvider.ui())
                 .subscribe(
                     { blogResponse ->
                         setData(blogResponse)

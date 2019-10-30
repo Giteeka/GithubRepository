@@ -3,7 +3,10 @@ package com.app.gitrepository.data.local
 import com.app.gitrepository.data.model.Repository
 import io.reactivex.Single
 
-class MyDbHelper(var databaseHelper: RoomDatabaseHelper) : DbHelper {
+open class MyDbHelper(var databaseHelper: RoomDatabaseHelper) : DbHelper {
+    override fun getRowByName(name: String): Single<Repository> {
+        return databaseHelper.rowDao().getRowItemByName(name)
+    }
 
     override fun insert(item: Repository) {
         databaseHelper.rowDao().insert(item)

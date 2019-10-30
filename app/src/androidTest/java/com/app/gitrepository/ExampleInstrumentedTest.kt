@@ -1,12 +1,19 @@
 package com.app.gitrepository
 
-import androidx.test.platform.app.InstrumentationRegistry
+import android.view.View
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import androidx.test.rule.ActivityTestRule
+import com.app.gitrepository.ui.home.HomeActivity
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -15,10 +22,57 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.app.gitrepository", appContext.packageName)
+
+    @JvmField
+    @Rule
+    val activityTestRule = ActivityTestRule(HomeActivity::class.java, true, false)
+
+    private val mockWebServer = MockWebServer()
+
+    private var progressBarGoneIdlingResource: ApiIdlingResource? = null
+
+    private lateinit var recyclerView: View
+    private lateinit var btnRetry: View
+    private lateinit var activity: HomeActivity
+
+    @Before
+    fun setup() {
+        mockWebServer.start(BuildConfig.PORT.toInt())
+//        mockWebServer.
     }
+
+    @Test
+    fun displayList() {
+//        mockWebServer.start(BuildConfig.PORT.toInt())
+        mockWebServer.dispatcher = SuccessDispatcher()
+        activityTestRule.launchActivity(null)
+        activity = activityTestRule.activity
+        recyclerView = activity.findViewById(R.id.rv_items)
+        progressBarGoneIdlingResource =
+            ApiIdlingResource(recyclerView , View.VISIBLE)
+        IdlingRegistry.getInstance().register(progressBarGoneIdlingResource)
+        Espresso.onView(ViewMatchers.withId(recyclerView.id)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+    }
+
+    @Test
+    fun errorView() {
+//        mockWebServer.start(BuildConfig.PORT.toInt())
+        mockWebServer.dispatcher = ErrorDispatcher()
+        activityTestRule.launchActivity(null)
+        activity = activityTestRule.activity
+        btnRetry= activity.findViewById(R.id.btn_retry)
+        progressBarGoneIdlingResource =
+            ApiIdlingResource(btnRetry , View.VISIBLE)
+        IdlingRegistry.getInstance().register(progressBarGoneIdlingResource)
+        Espresso.onView(ViewMatchers.withId(btnRetry.id)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+    }
+
+    @After
+    fun teardown() {
+        mockWebServer.shutdown()
+        IdlingRegistry.getInstance().unregister(progressBarGoneIdlingResource)
+    }
+
 }

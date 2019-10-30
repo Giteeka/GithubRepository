@@ -44,8 +44,5 @@ abstract class BaseViewModel<N>() : ViewModel() {
     fun setIsLoading(isLoading: Boolean) {
         this.isLoading.set(isLoading)
     }
-    fun getSchedulerProvider(): SchedulerProvider {
-        return AppSchedulerProvider()
-    }
 
 }

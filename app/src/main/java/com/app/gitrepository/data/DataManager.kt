@@ -7,5 +7,5 @@ import io.reactivex.Single
 
 interface DataManager : ApiHelper,DbHelper{
     fun isNetworkConnected() : Boolean
-    fun startWorker()
+//    fun startWorker()
 }

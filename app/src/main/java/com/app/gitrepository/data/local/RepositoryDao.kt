@@ -19,6 +19,9 @@ interface RepositoryDao {
     @Query("SELECT * from Repository")
     fun getRowItems(): Single<List<Repository>>
 
+    @Query("SELECT * from Repository WHERE name = :name LIMIT 1")
+    fun getRowItemByName(name: String): Single<Repository>
+
     @Query("DELETE from Repository")
     fun deleteAll()
 

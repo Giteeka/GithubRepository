@@ -13,6 +13,7 @@ interface DbHelper{
     fun insert(item: List<Repository>)
 
     fun getRowItems(): Single<List<Repository>>
+    fun getRowByName(name: String): Single<Repository>
 
     fun deleteAll()
 

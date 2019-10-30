@@ -26,7 +26,18 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.work.WorkManager
+import com.app.gitrepository.data.DataManager
 import com.app.gitrepository.data.MyDataManager
+import com.app.gitrepository.data.local.DbHelper
+import com.app.gitrepository.data.local.MyDbHelper
+import com.app.gitrepository.data.local.RoomDatabaseHelper
+import com.app.gitrepository.data.local.SharedPreferenceHelper
+import com.app.gitrepository.data.network.ApiService
+import com.app.gitrepository.data.network.MyApiHelper
+import com.app.gitrepository.utils.NetworkUtils
+import com.app.gitrepository.utils.rx.AppSchedulerProvider
+import com.app.gitrepository.utils.rx.SchedulerProvider
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity() {
 
@@ -57,7 +68,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     abstract fun getViewModel(): V?
 
     val isNetworkConnected: Boolean?
-        get() = myDataManager?.networkUtils?.isNetworkConnected()
+        get() = myDataManager?.isNetworkConnected()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,12 +88,25 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         return hasPermission
     }
 
-    private var myDataManager: MyDataManager? = null
-    fun getDataManager(): MyDataManager {
-        if (myDataManager == null)
-            myDataManager = MyDataManager(this)
+    private var myDataManager: DataManager? = null
+    fun getDataManager(): DataManager {
+        if (myDataManager == null) {
+
+            var dbHelper: DbHelper = MyDbHelper(RoomDatabaseHelper.getInstance(applicationContext))
+            var sharePref = SharedPreferenceHelper.getInstance(applicationContext)
+            var apiHelper = MyApiHelper(ApiService.create())
+            var networkUtils = NetworkUtils(applicationContext)
+            var workManager = WorkManager.getInstance(applicationContext)
+            myDataManager = MyDataManager(networkUtils, dbHelper, apiHelper)
+//            myDataManager = MyDataManager(this)
+        }
         return myDataManager!!
     }
+
+    fun getSchedulerProvider(): SchedulerProvider {
+        return AppSchedulerProvider()
+    }
+
 
     fun hideKeyboard() {
         val view = this.currentFocus
