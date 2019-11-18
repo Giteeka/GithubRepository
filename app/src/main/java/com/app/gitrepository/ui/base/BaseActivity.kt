@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.work.WorkManager
+import com.app.gitrepository.GitApp
 import com.app.gitrepository.data.DataManager
 import com.app.gitrepository.data.MyDataManager
 import com.app.gitrepository.data.local.DbHelper
@@ -94,7 +95,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
             var dbHelper: DbHelper = MyDbHelper(RoomDatabaseHelper.getInstance(applicationContext))
             var sharePref = SharedPreferenceHelper.getInstance(applicationContext)
-            var apiHelper = MyApiHelper(ApiService.create())
+            var apiHelper = MyApiHelper(ApiService.create((application as GitApp?)?.baseUrl.orEmpty()))
             var networkUtils = NetworkUtils(applicationContext)
             var workManager = WorkManager.getInstance(applicationContext)
             myDataManager = MyDataManager(networkUtils, dbHelper, apiHelper)

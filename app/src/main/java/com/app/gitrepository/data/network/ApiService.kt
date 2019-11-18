@@ -23,7 +23,7 @@ interface ApiService {
 
     companion object {
 
-        fun create(): ApiService {
+        fun create(baseUrl :String): ApiService {
 
             fun createDefaultOkHttpClient(): OkHttpClient {
                 val interceptor = HttpLoggingInterceptor()
@@ -40,7 +40,7 @@ interface ApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(baseUrl)
                 .client(createDefaultOkHttpClient())
                 .build()
 

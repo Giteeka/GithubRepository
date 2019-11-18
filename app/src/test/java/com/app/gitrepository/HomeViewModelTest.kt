@@ -52,6 +52,20 @@ class HomeViewModelTest {
     }
 
     @Test
+    fun error() {
+
+        Mockito.`when`(dataManager.fetchHomeScreenData())
+            .thenReturn(Single.error(Throwable("An error has occurred!")))
+        Mockito.`when`(dataManager.isNetworkConnected()).thenReturn(true)
+        Mockito.`when`(dataManager.getRowItems()).thenReturn(
+            Single.error(Throwable("An error has occurred!"))
+        )
+        homeViewModel.loadData()
+        testSchedulerProvider.testScheduler.triggerActions()
+        assertSame(homeViewModel.noDataFound.get(), true)
+    }
+
+    @Test
     fun test() {
         val repo: Repository = Repository(
             1, "Giteeka", "GiteekaRepo", avatarUrl, repoUrl, "Giteeka Test Repo",
@@ -81,19 +95,7 @@ class HomeViewModelTest {
     }
 
 
-    @Test
-    fun error() {
 
-        Mockito.`when`(dataManager.fetchHomeScreenData())
-            .thenReturn(Single.error(Throwable("An error has occurred!")))
-        Mockito.`when`(dataManager.isNetworkConnected()).thenReturn(true)
-        Mockito.`when`(dataManager.getRowItems()).thenReturn(
-            Single.error(Throwable("An error has occurred!"))
-        )
-        homeViewModel.loadData()
-        testSchedulerProvider.testScheduler.triggerActions()
-        assertSame(homeViewModel.noDataFound.get(), false)
-    }
 
 
     class TestSchedulerProvider(var testScheduler: TestScheduler) : SchedulerProvider {

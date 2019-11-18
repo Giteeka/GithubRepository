@@ -20,9 +20,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "com.app.gitrepository.MockRunner"
 //        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8080\"")
+//        buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8080\"")
 //        buildConfigField("String", "BASE_URL", "\"http://localhost\"")
-//        buildConfigField("String", "BASE_URL", "\"https://github-trending-api.now.sh/\"")
+        buildConfigField("String", "BASE_URL", "\"https://github-trending-api.now.sh/\"")
         buildConfigField("String", "PORT", "\"8080\"")
 
     }
@@ -71,9 +71,9 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidXJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
-    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "junit:junit:$junitVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 
     // Room components
     implementation "androidx.room:room-runtime:$roomVersion"
