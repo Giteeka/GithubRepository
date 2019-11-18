@@ -35,7 +35,7 @@ class MyDataManagerTest {
 
     private var apiHelper: ApiHelper = mock(MyApiHelper::class.java)
 
-    private var dataManager = MyDataManager(networkUtils, dbHelper, apiHelper = apiHelper)
+    private var dataManager = MyDataManager(networkUtils, dbHelper, apiHelper = apiHelper,workManager = null)
 
 //    private var apiHelper = mockDao(ApiHelper::class.java)
 //    private var dataManager = MyDataManager()

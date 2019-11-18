@@ -41,7 +41,6 @@ class ApiTest{
     fun testErrorApi(){
         `when`(apiService.getRepositories()).thenReturn(Single.error(Throwable("An error has occurred!")))
         var testObservable = apiHelper.fetchHomeScreenData().test()
-//        testObservable.assertError(Throwable::class.java)
         testObservable.assertErrorMessage("An error has occurred!")
 
 

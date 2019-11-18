@@ -95,10 +95,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
             var dbHelper: DbHelper = MyDbHelper(RoomDatabaseHelper.getInstance(applicationContext))
             var sharePref = SharedPreferenceHelper.getInstance(applicationContext)
-            var apiHelper = MyApiHelper(ApiService.create((application as GitApp?)?.baseUrl.orEmpty()))
+            var apiHelper =
+                MyApiHelper(ApiService.create((application as GitApp?)?.baseUrl.orEmpty()))
             var networkUtils = NetworkUtils(applicationContext)
             var workManager = WorkManager.getInstance(applicationContext)
-            myDataManager = MyDataManager(networkUtils, dbHelper, apiHelper)
+            myDataManager = MyDataManager(networkUtils, dbHelper, apiHelper, workManager)
 //            myDataManager = MyDataManager(this)
         }
         return myDataManager!!

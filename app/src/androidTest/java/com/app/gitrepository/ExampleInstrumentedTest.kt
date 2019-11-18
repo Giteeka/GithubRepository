@@ -38,12 +38,13 @@ class ExampleInstrumentedTest {
     @Before
     fun setup() {
         mockWebServer.start(BuildConfig.PORT.toInt())
-//        mockWebServer.
     }
 
+    /**
+     * Success test case of listing all repositories with mock web browser
+     */
     @Test
     fun displayList() {
-//        mockWebServer.start(BuildConfig.PORT.toInt())
         mockWebServer.dispatcher = SuccessDispatcher()
         activityTestRule.launchActivity(null)
         activity = activityTestRule.activity
@@ -55,9 +56,11 @@ class ExampleInstrumentedTest {
 
     }
 
+    /**
+     * Error test case of listing all repositories with mock web browser
+     */
     @Test
     fun errorView() {
-//        mockWebServer.start(BuildConfig.PORT.toInt())
         mockWebServer.dispatcher = ErrorDispatcher()
         activityTestRule.launchActivity(null)
         activity = activityTestRule.activity

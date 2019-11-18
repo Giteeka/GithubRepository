@@ -1,10 +1,12 @@
 package com.app.gitrepository
 
-import android.net.Uri
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 
+/**
+ * Success Mock Response for api
+ */
 class SuccessDispatcher : Dispatcher(){
 
     var response = "[\n" +
