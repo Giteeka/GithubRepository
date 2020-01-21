@@ -10,5 +10,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // this is commit one.
         // this is second commit
+        // this is cherry pick commit one
     }
 }
